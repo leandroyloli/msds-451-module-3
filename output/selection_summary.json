@@ -1,0 +1,192 @@
+{
+  "development_rows": 3723,
+  "unrestricted_subsets": 33554431,
+  "searched_subsets": 3670015,
+  "price_level_rule": [
+    "CloseLag1",
+    "CloseLag2",
+    "CloseLag3",
+    "CloseEMA2",
+    "CloseEMA4",
+    "CloseEMA8"
+  ],
+  "benchmark": {
+    "min_abs_correlation": 0.9989198529882374,
+    "loglik_gain": {
+      "close_plus_close_lag3": 0.2599432448728294,
+      "close_plus_ema8": 0.0020269850283511914,
+      "all_six_price_levels": 1.4516032747997087,
+      "hml_plus_close_versus_hml": 1.154117579791091
+    },
+    "aic_hurdle_per_extra_column": 1.0
+  },
+  "evaluated": 3670015,
+  "failed": 47799,
+  "seconds": 2115.5581377000017,
+  "best_aic": 5157.461463654612,
+  "winner": [
+    "VolumeLag1",
+    "Ret1",
+    "CloseEMA8"
+  ],
+  "top": [
+    {
+      "rank": 1,
+      "aic": 5157.461463654612,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseEMA8"
+      ]
+    },
+    {
+      "rank": 2,
+      "aic": 5157.581235289913,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseEMA4"
+      ]
+    },
+    {
+      "rank": 3,
+      "aic": 5157.614487432096,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseLag3"
+      ]
+    },
+    {
+      "rank": 4,
+      "aic": 5157.636591558703,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseEMA2"
+      ]
+    },
+    {
+      "rank": 5,
+      "aic": 5157.656266396598,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseLag2"
+      ]
+    },
+    {
+      "rank": 6,
+      "aic": 5157.657995066687,
+      "n_features": 3,
+      "features": [
+        "VolumeLag1",
+        "Ret1",
+        "CloseLag1"
+      ]
+    },
+    {
+      "rank": 7,
+      "aic": 5158.000058833774,
+      "n_features": 4,
+      "features": [
+        "VolumeLag1",
+        "VolumeLag3",
+        "Ret1",
+        "CloseEMA8"
+      ]
+    },
+    {
+      "rank": 8,
+      "aic": 5158.131437752667,
+      "n_features": 4,
+      "features": [
+        "VolumeLag1",
+        "VolumeLag3",
+        "Ret1",
+        "CloseEMA4"
+      ]
+    },
+    {
+      "rank": 9,
+      "aic": 5158.169700024313,
+      "n_features": 4,
+      "features": [
+        "VolumeLag1",
+        "VolumeLag3",
+        "Ret1",
+        "CloseLag3"
+      ]
+    },
+    {
+      "rank": 10,
+      "aic": 5158.1882702588155,
+      "n_features": 4,
+      "features": [
+        "VolumeLag1",
+        "VolumeLag3",
+        "Ret1",
+        "CloseEMA2"
+      ]
+    }
+  ],
+  "scaler_mean": {
+    "CloseLag1": 10.846035268945204,
+    "CloseLag2": 10.838752257897589,
+    "CloseLag3": 10.831253608740244,
+    "HMLLag1": 0.3344158358836264,
+    "HMLLag2": 0.33443312400949843,
+    "HMLLag3": 0.3341303179420379,
+    "OMCLag1": 0.006996000400614465,
+    "OMCLag2": 0.00692986774364978,
+    "OMCLag3": 0.0068477633223346535,
+    "VolumeLag1": 5439173.029546065,
+    "VolumeLag2": 5440300.194466827,
+    "VolumeLag3": 5441371.511146924,
+    "CloseEMA2": 10.838654101564671,
+    "CloseEMA4": 10.82806599735803,
+    "CloseEMA8": 10.806506858680164,
+    "Ret1": 0.0006503479769405036,
+    "Ret21": 0.01679876137816376,
+    "Mom12_1": 0.18833397267547206,
+    "RVol21": 0.019484083390541976,
+    "Parkinson21": 0.0004262624139907173,
+    "LogVolChg1": -0.0005691311122427608,
+    "Amihud21": 9.489569892685987e-09,
+    "Range1": 0.030534858830261268,
+    "Intraday1": -0.0007433893703480347,
+    "Overnight1": 0.0013937373472885383
+  },
+  "scaler_scale": {
+    "CloseLag1": 11.972330313715183,
+    "CloseLag2": 11.968789252366893,
+    "CloseLag3": 11.965161257132678,
+    "HMLLag1": 0.4372420409398083,
+    "HMLLag2": 0.4374112197953766,
+    "HMLLag3": 0.43725881877580747,
+    "OMCLag1": 0.3262012714724747,
+    "OMCLag2": 0.32619716902903945,
+    "OMCLag3": 0.3261482968895854,
+    "VolumeLag1": 5237949.381857027,
+    "VolumeLag2": 5240147.451488208,
+    "VolumeLag3": 5239679.6429699985,
+    "CloseEMA2": 11.96538274106749,
+    "CloseEMA4": 11.956482882089343,
+    "CloseEMA8": 11.938560817440145,
+    "Ret1": 0.021410906291100755,
+    "Ret21": 0.09480228479089313,
+    "Mom12_1": 0.3228765142603461,
+    "RVol21": 0.008663500516421533,
+    "Parkinson21": 0.00036672836092326234,
+    "LogVolChg1": 0.825581821371147,
+    "Amihud21": 4.766415338385896e-08,
+    "Range1": 0.015996630070548266,
+    "Intraday1": 0.019883856571626557,
+    "Overnight1": 0.010534970495740845
+  }
+}

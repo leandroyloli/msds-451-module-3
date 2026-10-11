@@ -1,52 +1,73 @@
-# Module 3: Programming Assignment 1
+# MSDS 451 Programming Assignment 1
 
-[Original in Canvas](https://canvas.northwestern.edu/courses/260285/assignments/1818435?module_item_id=3948239)
+Predict the next-day direction of WEGE3.SA (WEG ON, B3) from daily open, high, low, close, and volume. The report is `report/msds451-pa1.pdf`.
 
-## Overview
+Clone URL: https://github.com/leandroyloli/msds-451-module-3.git
 
-The first programming assignment builds on an example financial time series. Jump-start code shows how to construct features from a time series of daily prices with the objective of predicting returns for the next day. We demonstrate feature engineering, feature selection, and cross-validation methods.
+## Layout
 
-## Instructions
+| Path | Contents |
+| --- | --- |
+| `pipeline/01_config.py` | Symbol, dates, split, search ranges, and file paths |
+| `pipeline/02_data.py` | Download daily prices from Yahoo Finance |
+| `pipeline/03_features.py` | Build the 25 candidate columns and the direction label |
+| `pipeline/04_split.py` | Cut development, a 10-session gap, and the hold-out |
+| `pipeline/05_selection.py` | All-subsets AIC on the development window |
+| `pipeline/06_model.py` | Optuna search for XGBoost on the development window |
+| `pipeline/07_evaluate.py` | Fit the chosen model once and score the hold-out once |
+| `pipeline/08_report.py` | Render `report/msds451-pa1.pdf` |
+| `pipeline/09_run.py` | Run layers 02 through 08 in order |
+| `data/` | Prices, features, development, gap, and hold-out CSV files |
+| `output/` | JSON summaries and `holdout_report.txt` |
+| `figures/` | Hold-out ROC curve and confusion matrix |
+| `report/` | Chapter notes and the PDF report |
 
-**Pick an asset other than the one used in the example code. Do not use WTI.**
+`01_config.py` holds the premises that change the sample. `DEV_END` is the last calendar date kept in development. `GAP` is the number of following sessions left out of both the fit and the score.
 
-To help you get started on this assignment, we provide jump-start code and a technical report:
+## Run
 
-- `451_pa1_jump_start_v001.ipynb`
-- `451_pa1_jump_start_v001.html`
-- `451_pa1_jump_start_v001.py`
-- `451_pa1_technical_report_v002.pdf`
+Python 3.12.
 
-Getting data from Yahoo! Finance is easy with the Python yfinance package. Example files:
+```bash
+python -m venv .venv
+```
 
-- `getdata_yfinance.ipynb`
-- `getdata_yfinance.html`
-- `getdata_yfinance.py`
-- `msds_getdata_yfinance_aapl.csv`
+Windows:
 
-Consider using a rigorous model development and testing regimen, as described in Model Development and Testing. The jump-start code example, while executing time series cross-validation, fails to evaluate the fitted model on a hold-out test set.
+```bash
+.venv\Scripts\activate
+pip install -r requirements.txt
+python pipeline/09_run.py
+```
 
-***This programming assignment should have its own unique, public GitHub repository.*** Deliverables include a research report and Python program. The research report should be an Adobe Acrobat pdf file. The Python program can be (1) a Jupyter Notebook ipynb file and its associated html export, or (2) Python script py file with associated output listings and images. All deliverables should be submitted within a single public GitHub repository.
+macOS or Linux:
 
-### Grading Guidelines (50 points total)
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+python pipeline/09_run.py
+```
 
-- Problem Description (10 points)
-- Data Preparation and Pipeline (10 points)
-- Research Design (10 points)
-- Programming (10 points)
-- Exposition (10 points)
+`09_run.py` downloads the prices again, repeats the AIC search, and repeats the Optuna search. On the machine used for this submission those two searches took about 35 minutes and about 19 minutes. The CSV files, JSON summaries, figures, and PDF already in the repository are the result of that run.
 
-### Assignment Deliverables
+Rebuild the PDF from the saved chapters:
 
-- Include the web address text (URL) for the GitHub repository in the comments form of the assignment posting. The web address you provide should be the URL for the cloneable GitHub repository. It should end with the .git extension.
-- The Adobe pdf file for the report can be included in the repository.
-- Files with the data being analyzed should be included in the repository.
-- The README.md Markdown text file of the repository should provide complete documentation for the assignment. Include user instructions for running and testing the program. At the end of the README.md file, explain how you made use of AI assistants in completing the assignment.
+```bash
+python pipeline/08_report.py
+```
 
-Assignments in this class ask for documentation within public GitHub repositories. Advice from Microsoft on writing good repo README files: [Create a README for your repo](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops).
+Repeat only the hold-out score, using the saved features and hyperparameters:
 
-### References
+```bash
+python pipeline/07_evaluate.py
+```
 
-See Bibliography for the Course (Canvas: Bibliography for Financial Engineering).
+## What the run checks
 
-Due: Sun Oct 11, 2026 11:59pm. 50 points possible.
+`03_features.py` checks the return, range, and target formulas against the raw prices before it drops incomplete rows. `04_split.py` stops if development is empty, if fewer than `GAP` sessions follow `DEV_END`, or if the hold-out is empty. `05_selection.py` compares its logistic fit with scikit-learn on a sample of subsets and stops if the AIC gap exceeds 0.05. `07_evaluate.py` stops if development overlaps the hold-out, if the development row count does not match the saved model summary, or if the first hold-out day does not follow the last gap day.
+
+The hold-out file is not read by feature selection or by the hyperparameter search.
+
+## AI assistants
+
+I used Cursor, with an AI coding assistant, to implement the pipeline, run the searches, and draft the report chapters. I chose the asset (WEGE3.SA), the 25 candidate columns, the single joint AIC search, the rule of at most one price-level column, the development date, the 10-session gap, and the XGBoost search (Optuna, 100 trials, ROC AUC, seed 21). I reviewed each stage before the next one was run. The hold-out was scored once, after those choices were fixed, and was not used to change them.

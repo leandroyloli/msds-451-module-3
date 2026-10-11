@@ -1,0 +1,35 @@
+XGBoost
+Confusion Matrix
+[[261  76]
+ [277  71]]
+                  precision     recall   f1-score    support
+down or flat         0.4851     0.7745     0.5966        337
+up                   0.4830     0.2040     0.2869        348
+
+accuracy                                   0.4847        685
+macro avg            0.4841     0.4893     0.4417        685
+weighted avg         0.4840     0.4847     0.4392        685
+
+Always up
+Confusion Matrix
+[[  0 337]
+ [  0 348]]
+                  precision     recall   f1-score    support
+down or flat         0.0000     0.0000     0.0000        337
+up                   0.5080     1.0000     0.6738        348
+
+accuracy                                   0.5080        685
+macro avg            0.2540     0.5000     0.3369        685
+weighted avg         0.2581     0.5080     0.3423        685
+
+Repeat previous direction
+Confusion Matrix
+[[152 185]
+ [185 163]]
+                  precision     recall   f1-score    support
+down or flat         0.4510     0.4510     0.4510        337
+up                   0.4684     0.4684     0.4684        348
+
+accuracy                                   0.4599        685
+macro avg            0.4597     0.4597     0.4597        685
+weighted avg         0.4599     0.4599     0.4599        685
