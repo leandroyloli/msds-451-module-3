@@ -1,23 +1,30 @@
 {
   "features": [
-    "VolumeLag1",
     "Ret1",
-    "CloseEMA8"
+    "Ret21",
+    "Mom12_1",
+    "RVol21",
+    "Parkinson21",
+    "LogVolChg1",
+    "Range1",
+    "Intraday1",
+    "Overnight1"
   ],
   "best_params": {
-    "max_depth": 9,
-    "min_child_weight": 9,
-    "subsample": 0.5951152058114609,
-    "learning_rate": 0.01328487559561306,
-    "n_estimators": 925
+    "max_depth": 1,
+    "min_child_weight": 3,
+    "subsample": 0.7815428969575628,
+    "learning_rate": 0.007013730807321692,
+    "n_estimators": 51
   },
   "random_state": 21,
   "threshold": 0.5,
-  "development_cv_auc": 0.533501708143213,
+  "development_cv_auc": 0.5076880466671025,
   "windows": {
     "development_rows": 3723,
     "development_start": "2007-07-03",
     "development_end": "2023-12-28",
+    "development_up_share": 0.5044319097502015,
     "gap_rows": 10,
     "gap_start": "2024-01-02",
     "gap_end": "2024-01-15",
@@ -26,36 +33,131 @@
     "holdout_end": "2026-10-09",
     "up_share": 0.5080291970802919
   },
+  "bootstrap": {
+    "draws": 2000,
+    "block": 20
+  },
+  "skill_criterion": "lower end of the 95 percent ROC AUC interval above 0.5",
+  "skill": false,
+  "intervals": {
+    "XGBoost|accuracy": [
+      0.472992700729927,
+      0.545985401459854
+    ],
+    "XGBoost|accuracy_gap": [
+      0.0,
+      0.0
+    ],
+    "XGBoost|auc": [
+      0.49211601006758715,
+      0.5729254421136702
+    ],
+    "XGBoost|log_loss": [
+      0.6920174799631111,
+      0.6938326825516937
+    ],
+    "Logistic regression|accuracy": [
+      0.47883211678832116,
+      0.5693430656934306
+    ],
+    "Logistic regression|accuracy_gap": [
+      -0.04817518248175179,
+      0.07883211678832114
+    ],
+    "Logistic regression|auc": [
+      0.4730978363137834,
+      0.5857738920581295
+    ],
+    "Logistic regression|log_loss": [
+      0.687678081450325,
+      0.6965905650633575
+    ],
+    "Always up|accuracy": [
+      0.472992700729927,
+      0.545985401459854
+    ],
+    "Always up|accuracy_gap": [
+      0.0,
+      0.0
+    ],
+    "Always up|auc": [
+      0.5,
+      0.5
+    ],
+    "Always up|log_loss": [
+      0.692371231804222,
+      0.6936652539424396
+    ],
+    "Repeat previous direction|accuracy": [
+      0.41751824817518246,
+      0.5036861313868611
+    ],
+    "Repeat previous direction|accuracy_gap": [
+      -0.10510948905109485,
+      0.00583941605839422
+    ],
+    "Repeat previous direction|auc": [
+      0.4160250053534913,
+      0.5019876035817777
+    ]
+  },
   "rules": [
     {
       "name": "XGBoost",
-      "accuracy": 0.4846715328467153,
-      "auc": 0.4752080562092841,
-      "down_hit": 261,
-      "down_miss": 76,
-      "up_miss": 277,
-      "up_hit": 71,
+      "accuracy": 0.5080291970802919,
+      "auc": 0.5303344247757428,
+      "log_loss": 0.6929436987333925,
+      "down_hit": 0,
+      "down_miss": 337,
+      "up_miss": 0,
+      "up_hit": 348,
+      "up_call_share": 1.0,
       "matrix": [
         [
-          261,
-          76
+          0,
+          337
         ],
         [
-          277,
-          71
+          0,
+          348
         ]
       ],
-      "precision_up": 0.48299319727891155,
-      "recall_up": 0.20402298850574713
+      "precision_up": 0.5080291970802919,
+      "recall_up": 1.0
+    },
+    {
+      "name": "Logistic regression",
+      "accuracy": 0.5226277372262774,
+      "auc": 0.5267403390292984,
+      "log_loss": 0.6921950032868731,
+      "down_hit": 172,
+      "down_miss": 165,
+      "up_miss": 162,
+      "up_hit": 186,
+      "up_call_share": 0.5124087591240876,
+      "matrix": [
+        [
+          172,
+          165
+        ],
+        [
+          162,
+          186
+        ]
+      ],
+      "precision_up": 0.5299145299145299,
+      "recall_up": 0.5344827586206896
     },
     {
       "name": "Always up",
       "accuracy": 0.5080291970802919,
       "auc": 0.5,
+      "log_loss": 0.6930441233160951,
       "down_hit": 0,
       "down_miss": 337,
       "up_miss": 0,
       "up_hit": 348,
+      "up_call_share": 1.0,
       "matrix": [
         [
           0,
@@ -73,10 +175,12 @@
       "name": "Repeat previous direction",
       "accuracy": 0.45985401459854014,
       "auc": 0.4597146901326785,
+      "log_loss": null,
       "down_hit": 152,
       "down_miss": 185,
       "up_miss": 185,
       "up_hit": 163,
+      "up_call_share": 0.5080291970802919,
       "matrix": [
         [
           152,

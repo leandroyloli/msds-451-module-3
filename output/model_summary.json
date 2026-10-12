@@ -1,123 +1,165 @@
 {
   "features": [
-    "VolumeLag1",
     "Ret1",
-    "CloseEMA8"
+    "Ret21",
+    "Mom12_1",
+    "RVol21",
+    "Parkinson21",
+    "LogVolChg1",
+    "Range1",
+    "Intraday1",
+    "Overnight1"
   ],
   "development_rows": 3723,
   "n_trials": 100,
   "n_splits": 5,
   "gap": 10,
   "random_state": 21,
-  "best_auc": 0.533501708143213,
-  "best_auc_std": 0.030741985660228656,
-  "best_params": {
-    "max_depth": 9,
-    "min_child_weight": 9,
-    "subsample": 0.5951152058114609,
-    "learning_rate": 0.01328487559561306,
-    "n_estimators": 925
+  "ranges": {
+    "max_depth": [
+      1,
+      6
+    ],
+    "min_child_weight": [
+      1,
+      100
+    ],
+    "subsample": [
+      0.5,
+      1.0
+    ],
+    "learning_rate": [
+      0.005,
+      0.1
+    ],
+    "n_estimators": [
+      50,
+      1000
+    ]
   },
+  "top_trial": {
+    "auc": 0.5115082853355493,
+    "auc_std": 0.022967168186019356,
+    "max_depth": 1,
+    "min_child_weight": 1,
+    "subsample": 0.6770272245135228,
+    "learning_rate": 0.005632099613541754,
+    "n_estimators": 193
+  },
+  "band_floor": 0.5012370554726273,
+  "band_size": 83,
+  "chosen_rank": 52,
+  "best_auc": 0.5076880466671025,
+  "best_auc_std": 0.020430146230775506,
+  "best_params": {
+    "max_depth": 1,
+    "min_child_weight": 3,
+    "subsample": 0.7815428969575628,
+    "learning_rate": 0.007013730807321692,
+    "n_estimators": 51
+  },
+  "logistic_auc": 0.5069535118695022,
+  "logistic_auc_std": 0.025249054021025365,
   "top": [
     {
       "rank": 1,
-      "auc": 0.533501708143213,
-      "auc_std": 0.030741985660228656,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5951152058114609,
-      "learning_rate": 0.01328487559561306,
-      "n_estimators": 925
+      "auc": 0.5115082853355493,
+      "auc_std": 0.022967168186019356,
+      "max_depth": 1,
+      "min_child_weight": 1,
+      "subsample": 0.6770272245135228,
+      "learning_rate": 0.005632099613541754,
+      "n_estimators": 193
     },
     {
       "rank": 2,
-      "auc": 0.5334048120779036,
-      "auc_std": 0.033013303606517115,
-      "max_depth": 8,
-      "min_child_weight": 9,
-      "subsample": 0.5757259014491745,
-      "learning_rate": 0.01671803981540425,
-      "n_estimators": 881
+      "auc": 0.5107769226246486,
+      "auc_std": 0.02539045061150751,
+      "max_depth": 1,
+      "min_child_weight": 1,
+      "subsample": 0.6967774185041827,
+      "learning_rate": 0.005269890563971288,
+      "n_estimators": 182
     },
     {
       "rank": 3,
-      "auc": 0.5323184413033453,
-      "auc_std": 0.03189340158151699,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5727092091534806,
-      "learning_rate": 0.034320866986610674,
-      "n_estimators": 676
+      "auc": 0.5106759509175699,
+      "auc_std": 0.02348835095622654,
+      "max_depth": 1,
+      "min_child_weight": 3,
+      "subsample": 0.6777880155656957,
+      "learning_rate": 0.006931815987973067,
+      "n_estimators": 171
     },
     {
       "rank": 4,
-      "auc": 0.5321448542217507,
-      "auc_std": 0.03276124805096313,
-      "max_depth": 8,
-      "min_child_weight": 9,
-      "subsample": 0.5547022498529693,
-      "learning_rate": 0.022786872564298635,
-      "n_estimators": 845
+      "auc": 0.5106169463726384,
+      "auc_std": 0.024528522752739302,
+      "max_depth": 1,
+      "min_child_weight": 3,
+      "subsample": 0.7048918578161304,
+      "learning_rate": 0.0077590326569935185,
+      "n_estimators": 169
     },
     {
       "rank": 5,
-      "auc": 0.531831291887875,
-      "auc_std": 0.03011178191966309,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5129326326053507,
-      "learning_rate": 0.01787364652222681,
-      "n_estimators": 889
+      "auc": 0.5105388852211904,
+      "auc_std": 0.022065967359970885,
+      "max_depth": 1,
+      "min_child_weight": 1,
+      "subsample": 0.7242736428141788,
+      "learning_rate": 0.005695745176391193,
+      "n_estimators": 76
     },
     {
       "rank": 6,
-      "auc": 0.5318286031986477,
-      "auc_std": 0.03151954645965598,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5917217545389769,
-      "learning_rate": 0.01240621833012132,
-      "n_estimators": 991
+      "auc": 0.5105272271854628,
+      "auc_std": 0.022353929303675232,
+      "max_depth": 1,
+      "min_child_weight": 1,
+      "subsample": 0.6805726640344659,
+      "learning_rate": 0.00568960374359684,
+      "n_estimators": 161
     },
     {
       "rank": 7,
-      "auc": 0.5316955976841126,
-      "auc_std": 0.03240501991636121,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5476144882769116,
-      "learning_rate": 0.03433163907235144,
-      "n_estimators": 753
+      "auc": 0.5104912441524438,
+      "auc_std": 0.020660922167490003,
+      "max_depth": 1,
+      "min_child_weight": 2,
+      "subsample": 0.7285053302916148,
+      "learning_rate": 0.005546554497458606,
+      "n_estimators": 187
     },
     {
       "rank": 8,
-      "auc": 0.53149341891106,
-      "auc_std": 0.03257417921296535,
-      "max_depth": 9,
-      "min_child_weight": 9,
-      "subsample": 0.5728816449976573,
-      "learning_rate": 0.013724303408538217,
-      "n_estimators": 996
+      "auc": 0.5104624816260589,
+      "auc_std": 0.02582328675724127,
+      "max_depth": 1,
+      "min_child_weight": 3,
+      "subsample": 0.6969980276882783,
+      "learning_rate": 0.00523461203521965,
+      "n_estimators": 197
     },
     {
       "rank": 9,
-      "auc": 0.5312141988409319,
-      "auc_std": 0.03326456315142214,
-      "max_depth": 8,
-      "min_child_weight": 8,
-      "subsample": 0.5237808183271391,
-      "learning_rate": 0.016440749662039556,
-      "n_estimators": 847
+      "auc": 0.5103061655005445,
+      "auc_std": 0.025391692592828804,
+      "max_depth": 1,
+      "min_child_weight": 2,
+      "subsample": 0.6733484860841621,
+      "learning_rate": 0.0052077579964457405,
+      "n_estimators": 53
     },
     {
       "rank": 10,
-      "auc": 0.5309653052126371,
-      "auc_std": 0.03404637527905568,
-      "max_depth": 9,
-      "min_child_weight": 8,
-      "subsample": 0.5553985544694512,
-      "learning_rate": 0.02540322766509434,
-      "n_estimators": 791
+      "auc": 0.5103011911904181,
+      "auc_std": 0.022019382461721932,
+      "max_depth": 1,
+      "min_child_weight": 1,
+      "subsample": 0.9243034432801792,
+      "learning_rate": 0.006782012206083981,
+      "n_estimators": 399
     }
   ]
 }

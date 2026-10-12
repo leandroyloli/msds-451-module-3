@@ -1,38 +1,48 @@
 # 3. Features
 
-The target is the direction of the close-to-close log return on WEGE3.SA. On day t the label is 1 when log(C(t) / C(t-1)) is positive, and 0 when the close is flat or down. Each of the 25 candidates is known at the close of day t-1. The open, high, low, close, and volume of day t do not enter any candidate. Values are stored at full precision.
+The target is the direction of the close-to-close log return on WEGE3.SA. On day $t$,
 
-The 25 columns are one pool. A later chapter searches their subsets jointly. The first 15 follow the course example and are measured in reais or in shares. The other 10 restate return, volatility, and liquidity in units that do not grow with the price level. The adjusted close of WEG rises from about 0.09 reais in 2000 to about 55 reais in 2026, so a lag of the price mostly tracks that rise.
+$$r_t = \log(C_t / C_{t-1}), \qquad y_t = \mathbf{1}\{r_t > 0\}.$$
+
+Each of the 25 candidates is known at the close of day $t-1$. The open, high, low, close, and volume of day $t$ do not enter any candidate. Values are stored at full precision.
+
+The 25 columns are the candidate pool. Chapter 4 screens them for drift before any selection. The first 15 follow the course example and are measured in reais or in shares. The other 10 come from the literature. Nine of them are returns, ratios, or log changes, which do not grow with the price level. Amihud21 is measured per real traded. The adjusted close of WEG rises from about 0.09 reais in 2000 to about 55 reais in 2026, so a lag of the price mostly tracks that rise.
 
 ## Definitions
 
-| Feature | Definition, using information through day t-1 | Role |
+The three price averages are exponentially weighted means of closes through day $t-1$. The half-life is $\tau$, the smoothing weight is $\alpha$, and observation $i$ steps back has weight $w_i$:
+
+$$\alpha = 1 - \exp(-\ln 2 / \tau), \qquad w_i = (1 - \alpha)^i.$$
+
+CloseEMA2, CloseEMA4, and CloseEMA8 use $\tau = 1$, $2$, and $4$. The names follow the course example. The weights are normalized, which is the adjusted form of the moving average.
+
+| Feature | Definition | Role |
 | --- | --- | --- |
-| CloseLag1 | Close on t-1 | Example. Yesterday's price level. |
-| CloseLag2 | Close on t-2 | Example. Price level two sessions back. |
-| CloseLag3 | Close on t-3 | Example. Price level three sessions back. |
-| HMLLag1 | High minus low on t-1 | Example. Yesterday's range, in reais. |
-| HMLLag2 | High minus low on t-2 | Example. |
-| HMLLag3 | High minus low on t-3 | Example. |
-| OMCLag1 | Open minus close on t-1 | Example. Yesterday's open-to-close change, in reais. |
-| OMCLag2 | Open minus close on t-2 | Example. |
-| OMCLag3 | Open minus close on t-3 | Example. |
-| VolumeLag1 | Share volume on t-1 | Example. Undefined when the recorded volume is zero. |
-| VolumeLag2 | Share volume on t-2 | Example. Same zero-volume rule. |
-| VolumeLag3 | Share volume on t-3 | Example. Same zero-volume rule. |
-| CloseEMA2 | Exponential moving average of the close through t-1, half-life of 1 session | Example. The jump-start names are EMA2, EMA4, and EMA8; the half-lives are 1, 2, and 4 sessions. |
-| CloseEMA4 | Same average, half-life of 2 sessions | Example. |
-| CloseEMA8 | Same average, half-life of 4 sessions | Example. |
-| Ret1 | log(C(t-1) / C(t-2)) | One-day reversal (Jegadeesh, 1990; Lehmann, 1990). |
-| Ret21 | log(C(t-1) / C(t-22)) | About one month of past return. |
-| Mom12_1 | log(C(t-21) / C(t-252)) | Twelve-month return, skipping the most recent month (Jegadeesh and Titman, 1993). |
-| RVol21 | Sample standard deviation of the 21 daily log returns ending on t-1 | Recent volatility. |
-| Parkinson21 | Mean, over those 21 sessions, of [log(H/L)]^2 / (4 ln 2) | Range-based variance (Parkinson, 1980). It uses the high and the low. |
-| LogVolChg1 | log(V(t-1) / V(t-2)), on positive volume | Volume shock, linked to short-horizon reversal (Campbell, Grossman, and Wang, 1993). |
-| Amihud21 | Mean, over the 21 sessions ending on t-1, of absolute return / (close times share volume) | Illiquidity (Amihud, 2002). Each session in the window must have positive volume. |
-| Range1 | (H(t-1) - L(t-1)) / C(t-1) | Yesterday's range as a fraction of price. Scale-free HML. |
-| Intraday1 | log(C(t-1) / O(t-1)) | Yesterday's open-to-close return. Scale-free OMC. |
-| Overnight1 | log(O(t-1) / C(t-2)) | Yesterday's overnight gap. |
+| CloseLag1 | $C_{t-1}$ | Example. Yesterday's price level. |
+| CloseLag2 | $C_{t-2}$ | Example. Price level two sessions back. |
+| CloseLag3 | $C_{t-3}$ | Example. Price level three sessions back. |
+| HMLLag1 | $H_{t-1} - L_{t-1}$ | Example. Yesterday's range, in reais. |
+| HMLLag2 | $H_{t-2} - L_{t-2}$ | Example. |
+| HMLLag3 | $H_{t-3} - L_{t-3}$ | Example. |
+| OMCLag1 | $O_{t-1} - C_{t-1}$ | Example. Yesterday's open-to-close change, in reais. |
+| OMCLag2 | $O_{t-2} - C_{t-2}$ | Example. |
+| OMCLag3 | $O_{t-3} - C_{t-3}$ | Example. |
+| VolumeLag1 | $V_{t-1}$ | Example. Undefined when the recorded volume is zero. |
+| VolumeLag2 | $V_{t-2}$ | Example. Same zero-volume rule. |
+| VolumeLag3 | $V_{t-3}$ | Example. Same zero-volume rule. |
+| CloseEMA2 | weighted mean above, $\tau = 1$ | Example. |
+| CloseEMA4 | weighted mean above, $\tau = 2$ | Example. |
+| CloseEMA8 | weighted mean above, $\tau = 4$ | Example. |
+| Ret1 | $\log(C_{t-1}/C_{t-2})$ | One-day reversal (Jegadeesh, 1990; Lehmann, 1990). |
+| Ret21 | $\log(C_{t-1}/C_{t-22})$ | About one month of past return. |
+| Mom12_1 | $\log(C_{t-21}/C_{t-252})$ | Twelve-month return, skipping the most recent month (Jegadeesh and Titman, 1993). |
+| RVol21 | $\sqrt{\frac{1}{20}\sum_{s=t-21}^{t-1}(r_s-\bar r)^2}$ | Recent volatility. Sample standard deviation of 21 daily log returns. |
+| Parkinson21 | $\frac{1}{21}\sum_{s=t-21}^{t-1}\frac{[\log(H_s/L_s)]^2}{4\ln 2}$ | Range-based variance (Parkinson, 1980). It uses the high and the low. |
+| LogVolChg1 | $\log(V_{t-1}/V_{t-2})$ | Volume shock, on positive volume (Campbell, Grossman, and Wang, 1993). |
+| Amihud21 | $\frac{1}{21}\sum_{s=t-21}^{t-1}\frac{\lvert r_s\rvert}{C_s V_s}$ | Illiquidity (Amihud, 2002). Each session in the window must have positive volume. |
+| Range1 | $(H_{t-1}-L_{t-1})/C_{t-1}$ | Yesterday's range as a fraction of price. Scale-free HML. |
+| Intraday1 | $\log(C_{t-1}/O_{t-1})$ | Yesterday's open-to-close return. Scale-free OMC. |
+| Overnight1 | $\log(O_{t-1}/C_{t-2})$ | Yesterday's overnight gap. |
 
 ## Volume and the estimation sample
 

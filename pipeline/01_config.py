@@ -24,12 +24,28 @@ N_SPLITS = 5
 N_TRIALS = 100
 RANDOM_STATE = 21
 
-# XGBoost search ranges. subsample stays in [0.5, 1].
-XGB_MAX_DEPTH = (3, 9)
-XGB_MIN_CHILD_WEIGHT = (1, 9)
+# Observable universe. A candidate is kept when the last third of development
+# stays inside the 1st to 99th percentile range of the first third.
+# A stable column leaves about 2 percent outside; the limit is five times that.
+UNIVERSE_QUANTILES = (0.01, 0.99)
+UNIVERSE_MAX_OUTSIDE = 0.10
+
+# Forward selection and its noise gate.
+# Each shift rolls the label by at least MIN_SHIFT sessions against the features.
+N_SHIFTS = 200
+MIN_SHIFT = 252
+GATE_QUANTILE = 0.95
+
+# XGBoost search ranges.
+XGB_MAX_DEPTH = (1, 6)
+XGB_MIN_CHILD_WEIGHT = (1, 100)
 XGB_SUBSAMPLE = (0.5, 1.0)
-XGB_LEARNING_RATE = (0.01, 0.11)
-XGB_N_ESTIMATORS = (100, 999)
+XGB_LEARNING_RATE = (0.005, 0.1)
+XGB_N_ESTIMATORS = (50, 1000)
+
+# Hold-out intervals: block bootstrap.
+N_BOOT = 2000
+BOOT_BLOCK = 20
 
 PRICES_CSV = DATA_DIR / f"{FILE_STEM}_prices.csv"
 FEATURES_CSV = DATA_DIR / f"{FILE_STEM}_features.csv"
@@ -38,24 +54,23 @@ GAP_CSV = DATA_DIR / f"{FILE_STEM}_gap.csv"
 HOLDOUT_CSV = DATA_DIR / f"{FILE_STEM}_holdout.csv"
 FEATURES_SUMMARY_JSON = OUTPUT_DIR / "features_summary.json"
 SPLIT_SUMMARY_JSON = OUTPUT_DIR / "split_summary.json"
+UNIVERSE_SUMMARY_JSON = OUTPUT_DIR / "universe_summary.json"
+UNIVERSE_CHAPTER_MD = REPORT_DIR / "04-universe.md"
 SELECTION_SUMMARY_JSON = OUTPUT_DIR / "selection_summary.json"
-SELECTION_CHAPTER_MD = REPORT_DIR / "04-selection.md"
-SELECTION_CHAPTER_PDF = REPORT_DIR / "04-selection.pdf"
+SELECTION_CHAPTER_MD = REPORT_DIR / "05-selection.md"
 MODEL_SUMMARY_JSON = OUTPUT_DIR / "model_summary.json"
-MODEL_CHAPTER_MD = REPORT_DIR / "05-model.md"
-MODEL_CHAPTER_PDF = REPORT_DIR / "05-model.pdf"
-EVAL_CHAPTER_MD = REPORT_DIR / "06-holdout.md"
-EVAL_CHAPTER_PDF = REPORT_DIR / "06-holdout.pdf"
+MODEL_CHAPTER_MD = REPORT_DIR / "06-model.md"
+EVAL_CHAPTER_MD = REPORT_DIR / "07-holdout.md"
 METRICS_JSON = OUTPUT_DIR / "metrics.json"
 HOLDOUT_TXT = OUTPUT_DIR / "holdout_report.txt"
-ROC_FIGURE = FIGURES_DIR / "holdout_roc.png"
-CONFUSION_FIGURE = FIGURES_DIR / "holdout_confusion.png"
+ROC_FIGURE = FIGURES_DIR / "holdout_roc.svg"
+INTERVAL_FIGURE = FIGURES_DIR / "holdout_intervals.svg"
+REPORT_HTML = REPORT_DIR / "msds451-pa1.html"
 REPORT_PDF = REPORT_DIR / "msds451-pa1.pdf"
 PROBLEM_MD = REPORT_DIR / "01-problem.md"
 DATA_MD = REPORT_DIR / "02-data.md"
 FEATURES_CHAPTER_MD = REPORT_DIR / "03-features.md"
-FEATURES_CHAPTER_PDF = REPORT_DIR / "03-features.pdf"
-CONCLUSION_MD = REPORT_DIR / "07-conclusion.md"
+CONCLUSION_MD = REPORT_DIR / "08-conclusion.md"
 
 # Fifteen price-level columns from the course example.
 LEVEL_FEATURES = [
@@ -76,7 +91,7 @@ LEVEL_FEATURES = [
     "CloseEMA8",
 ]
 
-# Ten return, volatility, and liquidity columns. Searched together with LEVEL_FEATURES.
+# Ten return, volatility, and liquidity columns from the literature.
 LITERATURE_FEATURES = [
     "Ret1",
     "Ret21",
@@ -90,14 +105,5 @@ LITERATURE_FEATURES = [
     "Overnight1",
 ]
 
-MODEL_FEATURES = LEVEL_FEATURES + LITERATURE_FEATURES
-
-# These six track the same price path. A candidate subset may include at most one.
-PRICE_LEVEL_ONE_OF = [
-    "CloseLag1",
-    "CloseLag2",
-    "CloseLag3",
-    "CloseEMA2",
-    "CloseEMA4",
-    "CloseEMA8",
-]
+# All 25 candidates. 05_universe.py decides which of them enter selection.
+CANDIDATE_FEATURES = LEVEL_FEATURES + LITERATURE_FEATURES

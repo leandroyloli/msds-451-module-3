@@ -5,4 +5,3 @@ xgboost==3.4.1
 optuna==5.0.0
 yfinance==1.7.0
 matplotlib==3.11.2
-reportlab==5.0.1

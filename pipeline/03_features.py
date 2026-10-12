@@ -1,4 +1,4 @@
-"""Build the 25 candidate features and the same-day direction target.
+"""Build the 25 candidate features and the next-session direction target.
 
 Reads data/wege3_sa_prices.csv.
 Writes data/wege3_sa_features.csv and output/features_summary.json.
@@ -77,10 +77,10 @@ def engineer(prices: pl.DataFrame) -> pl.DataFrame:
     _assert_definitions(frame)
     keep = (
         ["Date", "Open", "High", "Low", "Close", "Volume", "HML", "OMC"]
-        + config.MODEL_FEATURES
+        + config.CANDIDATE_FEATURES
         + ["LogReturn", "Target"]
     )
-    model = frame.drop_nulls(subset=config.MODEL_FEATURES + ["LogReturn"]).select(keep)
+    model = frame.drop_nulls(subset=config.CANDIDATE_FEATURES + ["LogReturn"]).select(keep)
     return model
 
 
@@ -117,8 +117,8 @@ def summarize(prices: pl.DataFrame, features: pl.DataFrame) -> dict:
         "up_days": up,
         "down_or_flat_days": features.height - up,
         "up_share": up / features.height,
-        "n_features": len(config.MODEL_FEATURES),
-        "features": config.MODEL_FEATURES,
+        "n_features": len(config.CANDIDATE_FEATURES),
+        "features": config.CANDIDATE_FEATURES,
     }
 
 
